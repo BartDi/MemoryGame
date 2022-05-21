@@ -1,17 +1,23 @@
 <template>
   <h1>Memory Game</h1>
+  <div v-if="isFinished" >
+    <Score :title="title" :moves="moves"/>
+  </div>
   <div id="gamePanel">
-    <div v-for="i in 6">
+    <div v-for="i in 6" :key="i">
       <img v-if="canCheck[i-1]" @click="unhide(i)" :src="getImgUrl(i-1)" alt="">
       <div v-else class="card"></div>
     </div>
 
   </div>
+
 </template>
 
 <script>
+import Score from './components/Score.vue'
 export default {
   name: 'App',
+  components: { Score },
   data() {
     return{
       uncovers: 0,
@@ -21,10 +27,14 @@ export default {
       imagesUrl: {1:'banana.png', 2:'strawberry.png', 3:'cherry.png'},
       detected: [],
       canCheck: [true, true, true, true, true, true],
+      isFinished: false,
+      title: "Udało Ci się!!",
+      moves: 0,
     }
   },
   methods: {
     unhide(i){
+      this.moves += 1;
       if(this.detected.length<2){
         this.toggleCard(i);
       }else if(this.detected.length == 2){
@@ -58,28 +68,29 @@ export default {
 
         if(this.detected.length==2){
           if(this.cards[this.detected[0]] == this.cards[this.detected[1]]){
-            setTimeout(() => {
-            this.canCheck[this.detected[0]-1] = false;
-            this.canCheck[this.detected[1]-1] = false; 
-              if(!this.canCheck.includes(true)){
-                setTimeout(function () {
-                return alert('wygrałes');
-                }, 200);
-              }
-            }, 200);
+              //changing to false canCheck array on guessed cards position
+              setTimeout(() => {
+                this.canCheck[this.detected[0]-1] = false;
+                this.canCheck[this.detected[1]-1] = false; 
+              }, 200);
+
+              setTimeout(() => {
+                if(!this.canCheck.includes(true)){
+                  console.log('cos');
+                  console.log('cos');
+                  this.isFinished = true;
+                }
+              }, 200);
           }
 
           setTimeout((i) => {
             this.src[this.detected[0]-1] = 'card.jpg';
             this.src[this.detected[1]-1] = 'card.jpg';
             this.detected.splice(0, 2);
-          }, 200);
+          }, 1000);
           
         }
 
-      }else{
-        this.src[i-1] = 'card.jpg';
-        this.detected.splice(this.detected.indexOf(i), 1);
       }
     }
   },
