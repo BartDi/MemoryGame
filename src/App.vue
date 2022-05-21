@@ -31,11 +31,6 @@ export default {
         this.toggleCard(this.detected[0]);
         this.toggleCard(i);
       }
-      if(!this.canCheck.includes(true)){
-        setTimeout(function () {
-          return alert('wygrałes');
-        }, 200);
-      }
     },
     startGame(){
       var rnd = 0;
@@ -63,11 +58,25 @@ export default {
 
         if(this.detected.length==2){
           if(this.cards[this.detected[0]] == this.cards[this.detected[1]]){
+            setTimeout(() => {
             this.canCheck[this.detected[0]-1] = false;
             this.canCheck[this.detected[1]-1] = false; 
+              if(!this.canCheck.includes(true)){
+                setTimeout(function () {
+                return alert('wygrałes');
+                }, 200);
+              }
+            }, 200);
           }
+
+          setTimeout((i) => {
+            this.src[this.detected[0]-1] = 'card.jpg';
+            this.src[this.detected[1]-1] = 'card.jpg';
+            this.detected.splice(0, 2);
+          }, 200);
+          
         }
-        
+
       }else{
         this.src[i-1] = 'card.jpg';
         this.detected.splice(this.detected.indexOf(i), 1);
