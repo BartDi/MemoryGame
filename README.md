@@ -1,4 +1,4 @@
-# fiszki
+# MemoryGame
 
 ## Project setup
 ```
