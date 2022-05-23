@@ -3,6 +3,7 @@
         <div class="modal">
             <h1>{{title}}</h1>
             <p>Gra skończona w {{moves}} ruchach</p>
+            <button @click="$emit('again')">Zagraj ponownie</button>
         </div>
     </div>
 </template>
@@ -10,7 +11,7 @@
 <script>
 
 export default {
-    props: ['title', 'moves']
+    props: ['title', 'moves'],
 }
 
 </script>
@@ -32,5 +33,13 @@ export default {
 }
 h1{
     color: #03cfb4;
+}
+button{
+    background-color: #03cfb4;
+    color:white;
+    border-radius: 10px;
+    border: 1px solid #03b9a1;
+    width:100px;
+    height:50px;
 }
 </style>
