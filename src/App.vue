@@ -1,15 +1,15 @@
 <template>
   <h1>Memory Game</h1>
-  <select name="" id="">
+  <select name="" id="" @change="startGame(parseInt($event.target.value))">
     <option value="6">3x2</option>
     <option value="12">3x4</option>
-    <option value="16" @click="startGame(16)">4x4</option>
+    <option value="16">4x4</option>
   </select>
   <div v-if="isFinished" >
-    <Score :title="title" :moves="moves" @again="startGame(6)"/>
+    <Score :title="title" :moves="moves" @again="startGame(numberOfCards)"/>
   </div>
   <div id="gamePanel">
-    <div v-for="i in 6" :key="i">
+    <div v-for="i in numberOfCards" :key="i">
       <img v-if="canCheck[i-1]" @click="unhide(i)" :src="getImgUrl(i)" alt="">
       <div v-else class="card"></div>
     </div>
@@ -28,11 +28,12 @@ export default {
       cards: [] ,
       visible: [],  
       detected: [],
-      srcs: ['banana.png', 'cherry.png', 'strawberry.png'],
+      srcs: ['banana.png', 'cherry.png', 'strawberry.png', 'lemon.jpg', 'pear.jpg', 'apple.jpg', 'watermelon.jpg', 'pineapple.png'],
       canCheck: [],
       isFinished: false,
       title: "Udało Ci się!!",
       moves: 0,
+      numberOfCards: 6,
     }
   },
   methods: {
@@ -46,6 +47,7 @@ export default {
       }
     },
     startGame(n = 6){
+      this.numberOfCards = n;
       //Memory game require even number of cards
       if(n%2==1){
         return false;
@@ -128,10 +130,10 @@ export default {
   margin-top: 60px;
 }
 #gamePanel{
-  width:80%;
+  width:98%;
   height:800px;
   margin:auto;
-  border:5px solid crimson;
+  margin-left:5%;
 }
 img{
   width:300px;
