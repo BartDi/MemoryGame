@@ -1,17 +1,17 @@
 <template>
   <h1>Memory Game</h1>
   <select name="" id="" @change="startGame(parseInt($event.target.value))">
-    <option value="6">3x2</option>
-    <option value="12">3x4</option>
-    <option value="16">4x4</option>
+    <option value="6">6 </option>
+    <option value="12">12</option>
+    <option value="16">18</option>
   </select>
   <div v-if="isFinished" >
     <Score :title="title" :moves="moves" @again="startGame(numberOfCards)"/>
   </div>
   <div id="gamePanel">
-    <div v-for="i in numberOfCards" :key="i">
-      <img v-if="canCheck[i-1]" @click="unhide(i)" :src="getImgUrl(i)" alt="">
-      <div v-else class="card"></div>
+    <div v-for="i in numberOfCards" :key="i" class="imageDiv" :style="{width:width, height:width}">
+      <img v-if="canCheck[i-1]" @click="unhide(i)" style="width: 100%; height:100%"  :src="getImgUrl(i)" alt="">
+      <img v-else style="width:100%; height:100%;">
     </div>
 
   </div>
@@ -28,12 +28,13 @@ export default {
       cards: [] ,
       visible: [],  
       detected: [],
-      srcs: ['banana.png', 'cherry.png', 'strawberry.png', 'lemon.jpg', 'pear.jpg', 'apple.jpg', 'watermelon.jpg', 'pineapple.png'],
+      srcs: ['banana.jpg', 'lemon.jpg', 'strawberry.jpg', 'cherry.jpg', 'pear.jpg', 'apple.jpg', 'watermelon.jpg', 'pineapple.png'],
       canCheck: [],
       isFinished: false,
       title: "Udało Ci się!!",
       moves: 0,
       numberOfCards: 6,
+      width: "",
     }
   },
   methods: {
@@ -46,8 +47,23 @@ export default {
         this.toggleCard(i);
       }
     },
+    setSize(){
+      switch(this.numberOfCards){
+        case 12:
+          this.width = Math.round(95/4).toString() + "%";
+          break;
+        case 16:
+          this.width = Math.round(95/4).toString() + "%";
+          break;
+        default:
+          this.width = Math.round(95/3).toString() + "%";
+          break;
+      }
+    },
     startGame(n = 6){
       this.numberOfCards = n;
+      this.setSize();
+      console.log(this.width);
       //Memory game require even number of cards
       if(n%2==1){
         return false;
@@ -120,7 +136,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -130,24 +147,23 @@ export default {
   margin-top: 60px;
 }
 #gamePanel{
-  width:98%;
-  height:800px;
+  width:70%;
+  height:1000px;
   margin:auto;
-  margin-left:5%;
+  border-left: 4px solid crimson;
+  border-right: 4px solid crimson;
 }
 img{
-  width:300px;
+  display: block;
   float:left;
-  height:300px;
-  margin-left:50px;
-  margin-top:20px;
+}
+.imageDiv{
+  border: 4px solid white;
+  float:left;
 }
 .card{
-  width:300px;
   float:left;
-  height:300px;
-  margin-left:50px;
-  margin-top:20px;
+  display: block;
   background-color: white;
 }
 select{
