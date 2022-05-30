@@ -1,5 +1,10 @@
 # MemoryGame
 
+- App is build with Vue Cli
+
+## HEROKU
+https://bartosz-memory-game.herokuapp.com/
+
 ## Project setup
 ```
 npm install
@@ -14,6 +19,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
